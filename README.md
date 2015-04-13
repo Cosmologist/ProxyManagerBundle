@@ -67,6 +67,7 @@ $proxies = [
 
 $proxyManager = new Cosmologist\ProxyManagerBundle\Service($proxies);
 
+// Нельзя использовать переменную c именем $this в блоке use анонимной функции
 $that = $this;
 
 // Настройки пула для Guzzle
@@ -83,7 +84,7 @@ $options = [
 
         $that->parsePage($event->getResponse());
     },
-    'error' => function (ErrorEvent $event) use ($that, $proxyManager) {
+    'error' => function (ErrorEvent $event) use ($proxyManager) {
         $proxyAddress = $event->getRequest()->getConfig()->get('proxy');
         if ($proxy = $proxyManager->findProxyByAddress($proxyAddress)) {
             $proxy->increaseFailedAttemptsCount();
