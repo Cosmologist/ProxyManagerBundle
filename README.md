@@ -94,6 +94,14 @@ $options = [
     'pool_size' => 100
 ];
 
+// Формируем набор HTTP-запросов
+$requests = [
+    $guzzle->createRequest('GET', 'http://example.com/first.html', ['connect_timeout' => 10, 'timeout' => 20]),
+    $guzzle->createRequest('GET', 'http://example.com/second.html', ['connect_timeout' => 10, 'timeout' => 20]),
+    ...
+    $guzzle->createRequest('GET', 'http://example.com/last.html', ['connect_timeout' => 10, 'timeout' => 20])
+];
+
 // Запускаем асинхронное скачивание
 Pool::batch($guzzle, $requests, $options);
 ```
